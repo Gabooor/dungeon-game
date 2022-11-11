@@ -10,12 +10,24 @@ public class EnemySpawner : MonoBehaviour
     public GameObject towerRandomPrefab;
     public GameObject towerSpiralPrefab;
 
-    public List<Enemy> EnemyList = new List<Enemy>();
-    public List<Tower> TowerList = new List<Tower>();
+    // public List<Enemy> EnemyList;
+    // public List<Tower> TowerList;
+
+    public int enemyCount;
+    public int towerCount;
 
     public GameObject player;
 
     public Room currentRoom;
+
+    public void Start(){
+        // EnemyList = new List<Enemy>();
+        // TowerList = new List<Tower>();
+
+        enemyCount = 0;
+        towerCount = 0;
+
+    }
 
     public void Update(){
         foreach(Room room in DungeonGenerator.Rooms){
@@ -69,40 +81,58 @@ public class EnemySpawner : MonoBehaviour
                 }
                 Tower tower = obj.transform.GetComponent<Tower>();
                 tower.adherentRoom = room;
+
+                //TowerList.Add(tower);
+                switch(i%4){
+                    case 0: tower.transform.position = new Vector2(Location.x + 1.5f, Location.y + 1.5f); break; // Bottom left
+                    case 1: tower.transform.position = new Vector2(Location.x + width - 1.5f, Location.y + 1.5f); break; // Bottom right
+                    case 2: tower.transform.position = new Vector2(Location.x + 1.5f, Location.y + height - 1.5f); break; // Top left
+                    case 3: tower.transform.position = new Vector2(Location.x + width - 1.5f, Location.y + height - 1.5f); break; // Top right
+                }
+                //towerCount++;
+
                 // Debug.Log(tower.adherentRoom);
-                // enemy.index = Player.enemyCount;
+                // enemy.index = enemyCount;
                 // tower.setRoomBoundaries((int) Location.x, (int) Location.y, ((int) Location.x + width), ((int) Location.y + height));
                 // Debug.Log((int) Location.x + "|" + (int) Location.y + "|" + ((int) Location.x + width) + "|" + ((int) Location.y + height));
                 // enemy.enemyRoomIndex = currentRoom.roomIndex;
-                TowerList.Add(tower);
-                switch(i%4){
-                    case 0: TowerList[Player.towerCount].transform.position = new Vector2(Location.x + 1.5f, Location.y + 1.5f); break; // Bottom left
-                    case 1: TowerList[Player.towerCount].transform.position = new Vector2(Location.x + width - 1.5f, Location.y + 1.5f); break; // Bottom right
-                    case 2: TowerList[Player.towerCount].transform.position = new Vector2(Location.x + 1.5f, Location.y + height - 1.5f); break; // Top left
-                    case 3: TowerList[Player.towerCount].transform.position = new Vector2(Location.x + width - 1.5f, Location.y + height - 1.5f); break; // Top right
-                }
-                Player.towerCount++;
+                
+                // TowerList.Add(tower);
+                // switch(i%4){
+                //     case 0: TowerList[towerCount].transform.position = new Vector2(Location.x + 1.5f, Location.y + 1.5f); break; // Bottom left
+                //     case 1: TowerList[towerCount].transform.position = new Vector2(Location.x + width - 1.5f, Location.y + 1.5f); break; // Bottom right
+                //     case 2: TowerList[towerCount].transform.position = new Vector2(Location.x + 1.5f, Location.y + height - 1.5f); break; // Top left
+                //     case 3: TowerList[towerCount].transform.position = new Vector2(Location.x + width - 1.5f, Location.y + height - 1.5f); break; // Top right
+                // }
+                // towerCount++;
             }
         }
         else{
             for(int i = 0; i < 4; i++){
                 GameObject obj = Instantiate(enemyPrefab, enemyList.transform);
                 Enemy enemy = obj.transform.GetComponent<Enemy>();
-                enemy.index = Player.enemyCount;
+                enemy.index = enemyCount;
                 enemy.setRoomBoundaries((int) Location.x, (int) Location.y, ((int) Location.x + width), ((int) Location.y + height));
                 // Debug.Log((int) Location.x + "|" + (int) Location.y + "|" + ((int) Location.x + width) + "|" + ((int) Location.y + height));
                 //enemy.enemyRoomIndex = currentRoom.roomIndex;
                 enemy.adherentRoom = room;
                 room.enemyCount++;
                 // Debug.Log(room.enemyCount);
-                EnemyList.Add(enemy);
                 switch(i%4){
-                    case 0: EnemyList[Player.enemyCount].transform.position = new Vector2(Location.x + 1.5f, Location.y + 1.5f); break; // Bottom left
-                    case 1: EnemyList[Player.enemyCount].transform.position = new Vector2(Location.x + width - 1.5f, Location.y + 1.5f); break; // Bottom right
-                    case 2: EnemyList[Player.enemyCount].transform.position = new Vector2(Location.x + 1.5f, Location.y + height - 1.5f); break; // Top left
-                    case 3: EnemyList[Player.enemyCount].transform.position = new Vector2(Location.x + width - 1.5f, Location.y + height - 1.5f); break; // Top right
+                    case 0: enemy.transform.position = new Vector2(Location.x + 1.5f, Location.y + 1.5f); break; // Bottom left
+                    case 1: enemy.transform.position = new Vector2(Location.x + width - 1.5f, Location.y + 1.5f); break; // Bottom right
+                    case 2: enemy.transform.position = new Vector2(Location.x + 1.5f, Location.y + height - 1.5f); break; // Top left
+                    case 3: enemy.transform.position = new Vector2(Location.x + width - 1.5f, Location.y + height - 1.5f); break; // Top right
                 }
-                Player.enemyCount++;
+                // enemyCount++;
+                // EnemyList.Add(enemy);
+                // switch(i%4){
+                //     case 0: EnemyList[enemyCount].transform.position = new Vector2(Location.x + 1.5f, Location.y + 1.5f); break; // Bottom left
+                //     case 1: EnemyList[enemyCount].transform.position = new Vector2(Location.x + width - 1.5f, Location.y + 1.5f); break; // Bottom right
+                //     case 2: EnemyList[enemyCount].transform.position = new Vector2(Location.x + 1.5f, Location.y + height - 1.5f); break; // Top left
+                //     case 3: EnemyList[enemyCount].transform.position = new Vector2(Location.x + width - 1.5f, Location.y + height - 1.5f); break; // Top right
+                // }
+                // enemyCount++;
             }
 
             // for(int i = 0; i < EnemyList.Count; i++){

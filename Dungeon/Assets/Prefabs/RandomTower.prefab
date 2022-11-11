@@ -70,7 +70,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 10
   m_Sprite: {fileID: 3625043607559282579, guid: 045b15ec09bba42448d89db77fa6f20a, type: 3}
   m_Color: {r: 0.8207547, g: 0.29939476, b: 0.30912337, a: 1}
   m_FlipX: 0
@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePoint: {fileID: 1334458552181892032}
-  bulletPrefab: {fileID: 4001257360685679792, guid: 455bfcb86e4c26d4bbc7a504656a9c55, type: 3}
+  bulletPrefab: {fileID: 4001257360685679792, guid: e8d7a25dc0bcbcd45b2c3b1d19d7ef13, type: 3}
   bulletForce: 10
 --- !u!1 &8597270975710896358
 GameObject:

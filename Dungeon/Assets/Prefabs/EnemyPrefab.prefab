@@ -53,7 +53,7 @@ MonoBehaviour:
   health: 0
   isAlive: 0
   firePoint: {fileID: 4214409513812227307}
-  bulletPrefab: {fileID: 4001257360685679792, guid: 455bfcb86e4c26d4bbc7a504656a9c55, type: 3}
+  bulletPrefab: {fileID: 4001257360685679792, guid: e8d7a25dc0bcbcd45b2c3b1d19d7ef13, type: 3}
   bulletForce: 10
 --- !u!61 &8285000141593285467
 BoxCollider2D:
@@ -228,7 +228,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 830de1a1f4ff9744e85c2ede39aeac37, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

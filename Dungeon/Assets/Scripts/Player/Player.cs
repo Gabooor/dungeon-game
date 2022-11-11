@@ -32,9 +32,7 @@ public class Player : MonoBehaviour
 
     void Start(){
         health = 100;
-
-        enemyCount = 0;
-
+        
         isAlive = true;
 
         shootingCooldown = 0f;
