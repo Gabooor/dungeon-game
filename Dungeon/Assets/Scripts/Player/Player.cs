@@ -37,7 +37,7 @@ public class Player : MonoBehaviour
 
         shootingCooldown = 0f;
         fireRate = 3f;
-        bulletSpeed = 7f;
+        bulletSpeed = 12f;
         autoFire = false;
 
     }
@@ -56,8 +56,6 @@ public class Player : MonoBehaviour
         if(Input.GetMouseButton(0) && shootingCooldown == 0 && !autoFire){
             Shoot();
             shootingCooldown = originalShootingCooldown / fireRate;
-            // Debug.Log(originalShootingCooldown + "|" + fireRate);
-            // Debug.Log(shootingCooldown);
         }
 
         if(shootingCooldown > 0){

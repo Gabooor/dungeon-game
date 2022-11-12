@@ -8,7 +8,6 @@ public class RightRoom: Room {
     public RightRoom(Room ParentRoom, int RoomIndex, int Width, int Height, Vector3Int Location){
         this.roomIndex = RoomIndex;
         this.parentRoom = ParentRoom;
-        // this.parentRoomIndex = ParentRoomIndex;
 
         this.style = Style.right;
 
@@ -17,7 +16,7 @@ public class RightRoom: Room {
 
         this.location = new Vector3Int(Location.x, Location.y - Random.Range(1,height-1), 0);
         
-        int random = 0;//Random.Range(0,4);
+        int random = Random.Range(0,4);
         if(random == 0){
             this.isTowerRoom = true;
         }
@@ -53,7 +52,7 @@ public class RightRoom: Room {
                 this.location.y += 1;
                 this.width -= 1;
                 this.height -= 2;
-                if(width < 6 || height < 6 || (Location.y < this.location.y+1 || Location.y > this.location.y+(height-2))){
+                if(width < 10 || height < 10 || (Location.y < this.location.y+1 || Location.y > this.location.y+(height-2))){
                     width = 0;
                     height = 0;
                     isDeleted = true;
@@ -66,7 +65,6 @@ public class RightRoom: Room {
             overlaps = 0;
         }
         if(!isDeleted){
-        // Debug.Log("RightRoom: " + this.roomIndex + ", parent room: " + this.parentRoom.roomIndex);
             this.doorTop = new Vector3Int(location.x + Random.Range(1,width-1), location.y + (height-1), 0);
             this.doorRight = new Vector3Int(location.x + (width-1), location.y + Random.Range(1,height-1), 0);
             this.doorBottom = new Vector3Int(location.x + Random.Range(1,width-1), location.y, 0);
@@ -84,7 +82,6 @@ public class RightRoom: Room {
                     };
                 }
             }
-            // SpawnSpawningPlatforms(this.width, this.height);
         }
     }
 
@@ -101,31 +98,18 @@ public class RightRoom: Room {
                 DungeonGenerator.dungeon.SetTile(new Vector3Int(location.x + i, location.y + j, 0), DungeonGenerator.tiles[random]);
             }
         }
-        // DungeonGenerator.dungeon.SetTile(new Vector3Int(doorLeft.x,doorLeft.y,0), DungeonGenerator.tiles[this.color]);
-        // DungeonGenerator.dungeon.SetTile(new Vector3Int(doorLeft.x-1,doorLeft.y,0), DungeonGenerator.tiles[this.color]);
-        // DungeonGenerator.dungeon.SetTile(new Vector3Int(doorLeft.x-2,doorLeft.y,0), DungeonGenerator.tiles[this.color]);
-        
-        // foreach(Room room in DungeonGenerator.RoomsSorted){
-        //     if(room.roomIndex == this.parentRoomIndex){
-                if(this.parentRoom.isCleared){
-                    for(int i = -1; i < 2; i++){
-                        DungeonGenerator.dungeon.SetTile(new Vector3Int(doorLeft.x,doorLeft.y + i,0), DungeonGenerator.tiles[Random.Range(1,9)]);
-                        DungeonGenerator.dungeon.SetTile(new Vector3Int(doorLeft.x-1,doorLeft.y + i,0), DungeonGenerator.tiles[Random.Range(1,9)]);
-                        DungeonGenerator.dungeon.SetTile(new Vector3Int(doorLeft.x-2,doorLeft.y + i,0), DungeonGenerator.tiles[Random.Range(1,9)]);
-                    } 
-                    // foreach(Room room in DungeonGenerator.RoomsSorted){
-                    //     Debug.Log(room + "|" + room.roomIndex + "|" + room.parentRoomIndex);
-                    }
-        //         }
-        //     }
-        // }
-        
+        if(this.parentRoom.isCleared){
+            for(int i = -1; i < 2; i++){
+                DungeonGenerator.dungeon.SetTile(new Vector3Int(doorLeft.x,doorLeft.y + i,0), DungeonGenerator.tiles[Random.Range(1,9)]);
+                DungeonGenerator.dungeon.SetTile(new Vector3Int(doorLeft.x-1,doorLeft.y + i,0), DungeonGenerator.tiles[Random.Range(1,9)]);
+                DungeonGenerator.dungeon.SetTile(new Vector3Int(doorLeft.x-2,doorLeft.y + i,0), DungeonGenerator.tiles[Random.Range(1,9)]);
+            } 
+        }
     }
 
     public static void GenerateRightRoom(Room ParentRoom, int RoomIndex, Vector3Int Location){
-        int Width = Random.Range(10,18);
-        int Height = Random.Range(10,14); 
-        // RightRoom rightRoom = new RightRoom(RoomIndex+1, Width, Height, new Vector3Int(Location.x, Location.y, 0));
+        int Width = Random.Range(minSizeX,maxSizeX);
+        int Height = Random.Range(minSizeY,maxSizeY); 
         DungeonGenerator.Rooms.Add(new RightRoom(ParentRoom, RoomIndex, Width, Height, new Vector3Int(Location.x, Location.y, 0)));
     }
 }

@@ -12,6 +12,11 @@ public class Room{
     public bool firstEnter = true;
     public bool isTowerRoom = false;
 
+    public static int minSizeX = 15;
+    public static int maxSizeX = 27;
+    public static int minSizeY = 15;
+    public static int maxSizeY = 21;
+
     public enum Style
     {
         top,

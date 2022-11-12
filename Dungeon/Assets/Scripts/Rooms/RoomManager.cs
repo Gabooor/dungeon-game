@@ -14,14 +14,11 @@ public class RoomManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // locationText.text = player.position.x + "," + player.position.y;
         healthText.text = Player.health.ToString();
-                    // stateText.text = "not in room";
         int rooms = 0;
         foreach(Room CurrentRoom in DungeonGenerator.RoomsSorted){
             if(CurrentRoom.isInRoom){
-                    // stateText.text = CurrentRoom + " " + CurrentRoom.isCleared.ToString();
-                    rooms++;
+                rooms++;
                 if(CurrentRoom.isTowerRoom && CurrentRoom.timer < 35.0f){
                     CurrentRoom.timer += 1 * Time.deltaTime;
                     timerText.text = CurrentRoom.timer.ToString();

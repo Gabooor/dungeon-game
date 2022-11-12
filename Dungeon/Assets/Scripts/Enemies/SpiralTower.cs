@@ -29,7 +29,7 @@ public class SpiralTower : Tower
         yield return new WaitForSeconds(0.2f);
         // lookDir = new Vector2(3,0);
         //lookAngle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg + 15f;
-        Debug.Log(lookAngle);
+        //Debug.Log(lookAngle);
                 //yield return new WaitForSeconds(0.2f);
                 GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
                 bullet.transform.tag = "EnemyBullet";

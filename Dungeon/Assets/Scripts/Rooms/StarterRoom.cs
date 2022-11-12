@@ -6,12 +6,10 @@ using UnityEngine.Tilemaps;
 public class StarterRoom : Room {
 
     public StarterRoom(int RoomIndex, int Width, int Height, Vector3Int Location){
-        // this.parentRoomIndex = -1;
 
         this.roomIndex = RoomIndex;
         this.width = Width;
         this.height = Height;
-        // this.location = new Vector3Int(Location.x + 1, Location.y + 1, 0);
         this.location = Location;
         this.isCleared = true;
 
@@ -22,7 +20,6 @@ public class StarterRoom : Room {
         this.doorBottom = new Vector3Int(location.x + Random.Range(1,width-1), location.y, 0);
         this.doorLeft = new Vector3Int(location.x, location.y + Random.Range(1,height-1), 0);
         DungeonGenerator.rooms++;
-        //Debug.Log(this.location);
         DrawRoom();
         if(missingDoor != 0) TopRoom.GenerateTopRoom(this, DungeonGenerator.rooms, new Vector3Int(doorTop.x, doorTop.y + 2, 0));
         if(missingDoor != 1) RightRoom.GenerateRightRoom(this, DungeonGenerator.rooms, new Vector3Int(doorRight.x + 2, doorRight.y, 0));

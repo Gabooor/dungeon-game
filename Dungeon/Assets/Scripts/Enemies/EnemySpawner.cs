@@ -10,9 +10,6 @@ public class EnemySpawner : MonoBehaviour
     public GameObject towerRandomPrefab;
     public GameObject towerSpiralPrefab;
 
-    // public List<Enemy> EnemyList;
-    // public List<Tower> TowerList;
-
     public int enemyCount;
     public int towerCount;
 
@@ -21,12 +18,8 @@ public class EnemySpawner : MonoBehaviour
     public Room currentRoom;
 
     public void Start(){
-        // EnemyList = new List<Enemy>();
-        // TowerList = new List<Tower>();
-
         enemyCount = 0;
         towerCount = 0;
-
     }
 
     public void Update(){
@@ -34,7 +27,6 @@ public class EnemySpawner : MonoBehaviour
             Vector2 pos = new Vector2(player.transform.position.x, player.transform.position.y);
             if((pos.x >= room.location.x) && (pos.x <= room.location.x + room.width) && (pos.y >= room.location.y) && (pos.y <= room.location.y + room.height)){
                 room.isInRoom = true;
-                // Debug.Log(pos.x + "|" + room.location.x);
             }
             else{
                 room.isInRoom = false;
@@ -43,105 +35,95 @@ public class EnemySpawner : MonoBehaviour
                 currentRoom = room;
                 if(room.firstEnter){
                     Vector3Int end = new Vector3Int(room.location.x + room.width, room.location.y + room.height, 0);
-                    // Debug.Log(room.location + "" + end);
-                    //Debug.Log(room.roomIndex + ":" + room);
-                    //EnemySpawner.SpawnEnemy(new Vector2(room.location.x, room.location.y));
-                    //room.SpawnSpawningPlatforms(room.width, room.height);
                     if(room.style != Room.Style.starter){
-                        StartCoroutine(SpawnEnemies(new Vector2(room.location.x, room.location.y), room.width, room.height, room));
+                        if(room.isTowerRoom){
+                            StartCoroutine(SpawnTowers(room));
+                        }
+                        else{
+                            StartCoroutine(SpawnWaves(room));
+                        }
                     }
                     room.firstEnter = false;
                 }
-                //Debug.Log(room.roomIndex + ":" + room);
             }
-            //Vector3Int topRightCorner = new Vector3Int(room.location.x + width - 1, room.location.y + height - 1, 0);
-            //Debug.Log(room + ": " + room.roomIndex + "|" + room.location + "-" + topRightCorner);
         }
+
 
     }
 
-    IEnumerator SpawnEnemies(Vector2 Location, int width, int height, Room room){
+    IEnumerator SpawnWaves(Room room) {
+        List<int> quadrons = new List<int>();
         yield return new WaitForSeconds(2);
-        
-        if(room.isTowerRoom){
-            for(int i = 0; i < 4; i++){
-                GameObject obj;
-                int area = room.width * room.height;
-                if(area < 196){
-                    obj = Instantiate(towerRandomPrefab, enemyList.transform);
-                }
-                else{
-                    int ranTower = Random.Range(0,2);
-                        if(ranTower == 0){
-                            obj = Instantiate(towerSpiralPrefab, enemyList.transform);
-                        }
-                        else{
-                            obj = Instantiate(towerRandomPrefab, enemyList.transform);
-                        }
-                }
-                Tower tower = obj.transform.GetComponent<Tower>();
-                tower.adherentRoom = room;
-
-                //TowerList.Add(tower);
-                switch(i%4){
-                    case 0: tower.transform.position = new Vector2(Location.x + 1.5f, Location.y + 1.5f); break; // Bottom left
-                    case 1: tower.transform.position = new Vector2(Location.x + width - 1.5f, Location.y + 1.5f); break; // Bottom right
-                    case 2: tower.transform.position = new Vector2(Location.x + 1.5f, Location.y + height - 1.5f); break; // Top left
-                    case 3: tower.transform.position = new Vector2(Location.x + width - 1.5f, Location.y + height - 1.5f); break; // Top right
-                }
-                //towerCount++;
-
-                // Debug.Log(tower.adherentRoom);
-                // enemy.index = enemyCount;
-                // tower.setRoomBoundaries((int) Location.x, (int) Location.y, ((int) Location.x + width), ((int) Location.y + height));
-                // Debug.Log((int) Location.x + "|" + (int) Location.y + "|" + ((int) Location.x + width) + "|" + ((int) Location.y + height));
-                // enemy.enemyRoomIndex = currentRoom.roomIndex;
-                
-                // TowerList.Add(tower);
-                // switch(i%4){
-                //     case 0: TowerList[towerCount].transform.position = new Vector2(Location.x + 1.5f, Location.y + 1.5f); break; // Bottom left
-                //     case 1: TowerList[towerCount].transform.position = new Vector2(Location.x + width - 1.5f, Location.y + 1.5f); break; // Bottom right
-                //     case 2: TowerList[towerCount].transform.position = new Vector2(Location.x + 1.5f, Location.y + height - 1.5f); break; // Top left
-                //     case 3: TowerList[towerCount].transform.position = new Vector2(Location.x + width - 1.5f, Location.y + height - 1.5f); break; // Top right
-                // }
-                // towerCount++;
-            }
-        }
-        else{
-            for(int i = 0; i < 4; i++){
+        for(int j = 0; j < 16; j++) {
                 GameObject obj = Instantiate(enemyPrefab, enemyList.transform);
                 Enemy enemy = obj.transform.GetComponent<Enemy>();
                 enemy.index = enemyCount;
-                enemy.setRoomBoundaries((int) Location.x, (int) Location.y, ((int) Location.x + width), ((int) Location.y + height));
-                // Debug.Log((int) Location.x + "|" + (int) Location.y + "|" + ((int) Location.x + width) + "|" + ((int) Location.y + height));
-                //enemy.enemyRoomIndex = currentRoom.roomIndex;
+                enemy.setRoomBoundaries(room.location.x,room.location.y, (room.location.x + room.width), (room.location.y + room.height));
                 enemy.adherentRoom = room;
                 room.enemyCount++;
-                // Debug.Log(room.enemyCount);
-                switch(i%4){
-                    case 0: enemy.transform.position = new Vector2(Location.x + 1.5f, Location.y + 1.5f); break; // Bottom left
-                    case 1: enemy.transform.position = new Vector2(Location.x + width - 1.5f, Location.y + 1.5f); break; // Bottom right
-                    case 2: enemy.transform.position = new Vector2(Location.x + 1.5f, Location.y + height - 1.5f); break; // Top left
-                    case 3: enemy.transform.position = new Vector2(Location.x + width - 1.5f, Location.y + height - 1.5f); break; // Top right
+                bool goodQuadron = false;
+                while(goodQuadron == false){
+                    int quadron = -1;
+                    Vector2 pos = new Vector2(Random.Range(room.location.x+1,room.location.x+room.width-1),Random.Range(room.location.y+1, room.location.y+room.height-1));
+                    if(pos.x > room.location.x + room.width/2){
+                        if(pos.y > room.location.y + room.height/2){
+                            quadron = 2;
+                        }
+                        else{
+                            quadron = 3;
+                        }
+                    }
+                    else{
+                        if(pos.y > room.location.y + room.height/2){
+                            quadron = 1;
+                        }
+                        else{
+                            quadron = 4;
+                        }
+                    }
+                    Debug.Log(quadron);
+                    if(!quadrons.Contains(quadron)){
+                        quadrons.Add(quadron);
+                        Debug.Log(quadron);
+                        enemy.transform.position = new Vector2(pos.x, pos.y);
+                        goodQuadron = true;
+                   }
                 }
-                // enemyCount++;
-                // EnemyList.Add(enemy);
-                // switch(i%4){
-                //     case 0: EnemyList[enemyCount].transform.position = new Vector2(Location.x + 1.5f, Location.y + 1.5f); break; // Bottom left
-                //     case 1: EnemyList[enemyCount].transform.position = new Vector2(Location.x + width - 1.5f, Location.y + 1.5f); break; // Bottom right
-                //     case 2: EnemyList[enemyCount].transform.position = new Vector2(Location.x + 1.5f, Location.y + height - 1.5f); break; // Top left
-                //     case 3: EnemyList[enemyCount].transform.position = new Vector2(Location.x + width - 1.5f, Location.y + height - 1.5f); break; // Top right
-                // }
-                // enemyCount++;
+                if(quadrons.Count == 4){
+                    quadrons.Clear();
+                }
+            yield return new WaitForSeconds(2);
+        }
+    }
+
+    IEnumerator SpawnTowers(Room room){
+        yield return new WaitForSeconds(2);
+        
+        for(int i = 0; i < 4; i++){
+            GameObject obj;
+            int area = room.width * room.height;
+            if(area < 196){
+                obj = Instantiate(towerRandomPrefab, enemyList.transform);
             }
+            else{
+                int ranTower = Random.Range(0,2);
+                    if(ranTower == 0){
+                        obj = Instantiate(towerSpiralPrefab, enemyList.transform);
+                    }
+                    else{
+                        obj = Instantiate(towerRandomPrefab, enemyList.transform);
+                    }
+            }
+            Tower tower = obj.transform.GetComponent<Tower>();
+            tower.adherentRoom = room;
 
-            // for(int i = 0; i < EnemyList.Count; i++){
-            //     Debug.Log(EnemyList[i].enemyRoomIndex);
-            // }
-
-            // for(int i = 0; i < room.enemies.Length; i++){
-            //     Debug.Log("Room #" + room.roomIndex + ": " + room.enemies[i].index);
-            // }
+            switch(i%4){
+                case 0: tower.transform.position = new Vector2(room.location.x + 1.5f, room.location.y + 1.5f); break; // Bottom left
+                case 1: tower.transform.position = new Vector2(room.location.x + room.width - 1.5f, room.location.y + 1.5f); break; // Bottom right
+                case 2: tower.transform.position = new Vector2(room.location.x + 1.5f, room.location.y + room.height - 1.5f); break; // Top left
+                case 3: tower.transform.position = new Vector2(room.location.x + room.width - 1.5f, room.location.y + room.height - 1.5f); break; // Top right
+            }
         }
-        }
+        
+    }
 }

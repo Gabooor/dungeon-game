@@ -422,8 +422,6 @@ MonoBehaviour:
   enemyList: {fileID: 481381003}
   towerRandomPrefab: {fileID: 1313474133552184731, guid: 7760f105e55e9f647bc934d61fe1066b, type: 3}
   towerSpiralPrefab: {fileID: 6068829292912860628, guid: 47b415ce4c5155443882012424571407, type: 3}
-  EnemyList: []
-  TowerList: []
   enemyCount: 0
   towerCount: 0
   player: {fileID: 1572300810}
@@ -1354,7 +1352,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 7
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
