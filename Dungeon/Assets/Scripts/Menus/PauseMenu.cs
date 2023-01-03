@@ -24,12 +24,14 @@ public class PauseMenu : MonoBehaviour
         pauseMenu.SetActive(true);
         isGamePaused = true;
         Time.timeScale = 0;
+        Cursor.visible = true;
     }
 
     public void ResumeGame(){
         pauseMenu.SetActive(false);
         isGamePaused = false;
         Time.timeScale = 1;
+        Cursor.visible = false;
     }
 
     public void ExitToMenu(){

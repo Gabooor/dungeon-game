@@ -28,7 +28,7 @@ public class PlayerDeath : MonoBehaviour
     void Update()
     {
         if(!Player.isAlive){
-            Debug.Log(ts);
+            //Debug.Log(ts);
             cooldown -= 1f * Time.deltaTime;
             if(ts != TimeState.stopped){
                 cam.orthographicSize -= 2.5f * Time.deltaTime;

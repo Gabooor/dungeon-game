@@ -4,17 +4,20 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    // --- Inventory ---
+    [SerializeField] private UI_Inventory uiInventory;
+    private Inventory inventory;
+
+    // --- Movement ---
     public float speed = 8f;
     public Rigidbody2D rb;
     public Vector2 movement;
 
+    // --- Health ---
     public static int health;
-
-    public static int enemyCount;
-    public static int towerCount;
-
     public static bool isAlive;
 
+    // --- Shooting ---
     public Transform firePoint;
     public GameObject bulletPrefab;
     private float bulletSpeed;
@@ -24,22 +27,37 @@ public class Player : MonoBehaviour
     public float fireRate;
     public bool autoFire;
 
-    private Inventory inventory;
-
-    void Awake(){
-        inventory = new Inventory();
-    }
-
     void Start(){
+
+        // Setting up inventory
+        inventory = new Inventory();
+        uiInventory.SetInventory(inventory);
+
+
+        // Spawning items
+        float w = (float) DungeonGenerator.Rooms[0].width;
+        float h = (float) DungeonGenerator.Rooms[0].height;
+        Debug.Log(w);
+
+        for(int i = 0; i < 75; i++){
+            float randomW = Random.Range(0.0f,w) + 0.5f;
+            float randomH = Random.Range(0.0f,h) + 0.5f;
+            //Debug.Log(randomW + " " + randomH);
+            
+        ItemWorld.SpawnItemWorld(new Vector3(randomW,randomH), new Item { itemType = Item.ItemType.HealthPotion, amount = 1});
+        }
+
+
+
+        // Setting up health
         health = 100;
-        
         isAlive = true;
 
+        // Basic values for shooting
         shootingCooldown = 0f;
         fireRate = 3f;
         bulletSpeed = 12f;
         autoFire = false;
-
     }
 
     void Update()
@@ -64,29 +82,50 @@ public class Player : MonoBehaviour
         if(shootingCooldown < 0) shootingCooldown = 0;
     }
 
-    void FixedUpdate()
+    public void FixedUpdate()
     {
         moveCharacter(movement);
     }
 
-    void moveCharacter(Vector2 direction)
+    public void moveCharacter(Vector2 direction)
     {
         rb.MovePosition((Vector2) transform.position + (direction * speed * Time.deltaTime));
     }
 
     public void TakeDamage(int damage){
+        // If damage > health, you die
         if(damage >= health){
             Player.isAlive = false;
             Debug.Log("You died");
         }
+        // else you take damage
         health -= damage;
     }
 
-    void Shoot()
+    public void Shoot()
     {
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation); 
         bullet.transform.tag = "PlayerBullet";
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         rb.AddForce(firePoint.up * bulletSpeed, ForceMode2D.Impulse);
+    }
+
+    public void OnTriggerEnter2D(Collider2D collider){
+        // Picking up items
+        ItemWorld itemWorld = collider.GetComponent<ItemWorld>();
+        if(itemWorld != null){
+            Item[] itemList = inventory.GetItemList();
+            for(int i = 0; i < inventory.maxItems; i++){
+                if(itemList[i] == null){
+                    inventory.AddItem(itemWorld.GetItem());
+                    itemWorld.DestroySelf();
+                    break;
+                }
+            }
+            /*if(inventory.GetItemList().Count != inventory.maxItems){
+                inventory.AddItem(itemWorld.GetItem());
+                itemWorld.DestroySelf();
+            }*/
+        }
     }
 }
