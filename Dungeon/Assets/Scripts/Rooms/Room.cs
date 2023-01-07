@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Room{
+    // A szobák alapvető értékeit tárolja
 
     public int width;
     public int height;
@@ -54,7 +55,7 @@ public class Room{
     public int roomIndex;
 
     public Enemy[] enemies;
-    public int enemyCount = 0;
+    public int enemyCount;
     
-    public float timer = 0.0f;
+    public float timer = 12.0f;
 }

@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject enemyPrefab;
+    // Az ellenfelek spawnolásáért felel
+    // Első belépéskor elkezdi az ellenfeleket spawnolni
+    public GameObject skeletonArcherPrefab;
+    public GameObject skeletonWarriorPrefab;
     public GameObject enemyList;
 
     public GameObject towerRandomPrefab;
     public GameObject towerSpiralPrefab;
+
+    public int enemySpawnAmount;
 
     public int enemyCount;
     public int towerCount;
@@ -18,6 +23,7 @@ public class EnemySpawner : MonoBehaviour
     public Room currentRoom;
 
     public void Start(){
+        enemySpawnAmount = 16;
         enemyCount = 0;
         towerCount = 0;
     }
@@ -40,6 +46,7 @@ public class EnemySpawner : MonoBehaviour
                             StartCoroutine(SpawnTowers(room));
                         }
                         else{
+                            room.enemyCount = enemySpawnAmount;
                             StartCoroutine(SpawnWaves(room));
                         }
                     }
@@ -53,14 +60,21 @@ public class EnemySpawner : MonoBehaviour
 
     IEnumerator SpawnWaves(Room room) {
         List<int> quadrons = new List<int>();
-        yield return new WaitForSeconds(2);
-        for(int j = 0; j < 16; j++) {
-                GameObject obj = Instantiate(enemyPrefab, enemyList.transform);
+        yield return new WaitForSeconds(1);
+        for(int j = 0; j < enemySpawnAmount; j++) {
+                GameObject obj;
+                int randEnemy = Random.Range(0,2);
+                switch(randEnemy){
+                    default:
+                    case 0: obj = Instantiate(skeletonArcherPrefab, enemyList.transform); break;
+                    case 1: obj = Instantiate(skeletonWarriorPrefab, enemyList.transform); break;
+                }
+                //GameObject obj = Instantiate(skeletonArcherPrefab, enemyList.transform);
                 Enemy enemy = obj.transform.GetComponent<Enemy>();
                 enemy.index = enemyCount;
                 enemy.setRoomBoundaries(room.location.x,room.location.y, (room.location.x + room.width), (room.location.y + room.height));
                 enemy.adherentRoom = room;
-                room.enemyCount++;
+                //room.enemyCount++;
                 bool goodQuadron = false;
                 while(goodQuadron == false){
                     int quadron = -1;
@@ -81,10 +95,10 @@ public class EnemySpawner : MonoBehaviour
                             quadron = 4;
                         }
                     }
-                    Debug.Log(quadron);
+                    //Debug.Log(quadron);
                     if(!quadrons.Contains(quadron)){
                         quadrons.Add(quadron);
-                        Debug.Log(quadron);
+                        //Debug.Log(quadron);
                         enemy.transform.position = new Vector2(pos.x, pos.y);
                         goodQuadron = true;
                    }

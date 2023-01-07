@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class RoomManager : MonoBehaviour
 {
+    // A szobák kinyitásáért felel
+    // Vagy az összes ellenfél meghalt, vagy túlélte a játékos a 35 másodpercet
     public Transform player;
     public Text timerText;
     public Text stateText;
@@ -19,12 +21,12 @@ public class RoomManager : MonoBehaviour
         foreach(Room CurrentRoom in DungeonGenerator.RoomsSorted){
             if(CurrentRoom.isInRoom){
                 rooms++;
-                if(CurrentRoom.isTowerRoom && CurrentRoom.timer < 35.0f){
-                    CurrentRoom.timer += 1 * Time.deltaTime;
+                if(CurrentRoom.isTowerRoom && CurrentRoom.timer > 0.0f){
+                    CurrentRoom.timer -= 1 * Time.deltaTime;
                     timerText.text = CurrentRoom.timer.ToString();
                 }
                 else timerText.text = "";
-                if(CurrentRoom.isTowerRoom && CurrentRoom.timer > 35.0f && !CurrentRoom.isCleared){
+                if(CurrentRoom.isTowerRoom && CurrentRoom.timer < 0.0f && !CurrentRoom.isCleared){
                     OpenDoors(CurrentRoom);
                 }
             }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RandomTower : Tower
 {
-
+    public int damage = 25;
     // Update is called once per frame
     void Update()
     {
@@ -26,6 +26,7 @@ public class RandomTower : Tower
         for(int i = 0; i < 7; i++){
         //yield return new WaitForSeconds(0.2f);
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        bullet.GetComponent<Bullet>().damage = damage;
         bullet.transform.tag = "EnemyBullet";
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
 

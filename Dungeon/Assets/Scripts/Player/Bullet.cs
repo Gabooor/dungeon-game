@@ -8,6 +8,7 @@ public class Bullet : MonoBehaviour
     //protected float aliveTime = 1.5f;
     // private int penetration = 0;
     // public static int maxPenetration = 0;
+    public int damage;
 
     // Update is called once per frame
     void FixedUpdate()
@@ -24,15 +25,15 @@ public class Bullet : MonoBehaviour
         if(transform.tag == "EnemyBullet"){
             if(col.transform.tag.Equals("Player")){
                 Player player = col.transform.GetComponent<Player>();
-                player.TakeDamage(10);
+                player.TakeDamage(damage);
                 Destroy(gameObject);
             }
         }
         if(transform.tag == "PlayerBullet"){
             if(col.transform.tag.Equals("Enemy")){
                 Enemy enemy = col.transform.GetComponent<Enemy>();
-                enemy.TakeDamage(10);
-                Debug.Log(enemy.health);
+                enemy.TakeDamage(damage);
+                //Debug.Log(enemy.health);
                 Destroy(gameObject);
             }
         }

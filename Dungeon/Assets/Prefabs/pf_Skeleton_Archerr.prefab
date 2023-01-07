@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7395003654259349804}
   - component: {fileID: 5689225626647279142}
   m_Layer: 7
-  m_Name: EnemyPrefab
+  m_Name: pf_Skeleton_Archerr
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

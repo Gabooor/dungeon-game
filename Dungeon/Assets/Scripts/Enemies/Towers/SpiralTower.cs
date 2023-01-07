@@ -6,7 +6,7 @@ public class SpiralTower : Tower
 {
     Vector2 lookDir = new Vector2(3,0);
     float lookAngle;
-
+    public int damage = 20;
 
     // Update is called once per frame
     void Update()
@@ -32,6 +32,7 @@ public class SpiralTower : Tower
         //Debug.Log(lookAngle);
                 //yield return new WaitForSeconds(0.2f);
                 GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+                bullet.GetComponent<Bullet>().damage = damage;
                 bullet.transform.tag = "EnemyBullet";
                 Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
 
