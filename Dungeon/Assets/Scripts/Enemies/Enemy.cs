@@ -35,7 +35,7 @@ public class Enemy : MonoBehaviour
     public void Die(){
         this.adherentRoom.enemyCount--;
         if(this.adherentRoom.enemyCount == 0){
-            RoomManager.OpenDoors(this.adherentRoom);
+            //RoomManager.OpenDoors(this.adherentRoom);
         }
         Destroy(gameObject);
     }

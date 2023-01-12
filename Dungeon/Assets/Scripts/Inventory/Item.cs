@@ -20,7 +20,12 @@ public class Item
         Ring
     }
 
+    public int level;
     public ItemType itemType;
+
+    public int GetLevel(){
+        return this.level;
+    }
 
     public Sprite GetSprite(){
         switch(itemType){

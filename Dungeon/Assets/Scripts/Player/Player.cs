@@ -39,17 +39,17 @@ public class Player : MonoBehaviour
 
     void Awake(){
         // Setting up inventory
-        inventorySpace = 63;
+        inventorySpace = 35;
         inventory = new Item[inventorySpace];
         
         // Setting up armor
-        helmet = new Item { itemType = Item.ItemType.Helmet};
-        chestplate = new Item { itemType = Item.ItemType.Chestplate};
-        leggings = new Item { itemType = Item.ItemType.Leggings};
-        boots = new Item { itemType = Item.ItemType.Boots};
-        amulet = new Item { itemType = Item.ItemType.Amulet};
-        ring = new Item { itemType = Item.ItemType.Ring};
-        weapon = new Item { itemType = Item.ItemType.Sword};
+        helmet = new Item { itemType = Item.ItemType.Helmet, level = 1};
+        chestplate = new Item { itemType = Item.ItemType.Chestplate, level = 2};
+        leggings = new Item { itemType = Item.ItemType.Leggings, level = 3};
+        boots = new Item { itemType = Item.ItemType.Boots, level = 4};
+        amulet = new Item { itemType = Item.ItemType.Amulet, level = 5};
+        ring = new Item { itemType = Item.ItemType.Ring, level = 6};
+        weapon = new Item { itemType = Item.ItemType.Sword, level = 7};
     }
 
     void Start(){

@@ -15,13 +15,6 @@ public class InventoryUI : MonoBehaviour
     public GameObject InventoryPanel;
     public GameObject EquipmentPanel;
 
-    // public Transform HelmetPanel;
-    // public Transform ChestplatePanel;
-    // public Transform LeggingsPanel;
-    // public Transform BootsPanel;
-    
-    // public static GameObject WeaponPanel;
-
     private float itemSlotCellSize = 100f;
 
     public static bool isButton1Clicked;
@@ -34,48 +27,9 @@ public class InventoryUI : MonoBehaviour
     void Start(){
         buttons = new Transform[Player.inventorySpace+7];
         CreateGrid();
-        // for(int i = 0; i < buttons.Length; i++){
-        //     Debug.Log(buttons[i].gameObject.name);
-        // }
     
         isButton1Clicked = false;
         isButton2Clicked = false;
-
-        // HelmetPanel = Transform.Find("HelmetSlot");
-        // ChestplatePanel = Transform.Find("ChestplateSlot");
-        // LeggingsPanel = Transform.Find("LeggingsSlot");
-        // BootsPanel = Transform.Find("BootsSlot");
-        
-        // if(Player.helmet != null){
-        //     foreach(Transform child in HelmetPanel){
-        //         if(child.gameObject.name == "image"){
-        //             child.sprite = Player.helmet.GetSprite();
-        //         }
-        //     }
-        // }
-        // if(Player.chestplate != null){
-        //     foreach(Transform child in ChestplatePanel){
-        //         if(child.gameObject.name == "image"){
-        //             child.sprite = Player.chestplate.GetSprite();
-        //         }
-        //     }
-        // }
-        // if(Player.leggings != null){
-        //     foreach(Transform child in LeggingsPanel){
-        //         if(child.gameObject.name == "image"){
-        //             child.sprite = Player.leggings.GetSprite();
-        //         }
-        //     }
-        // }
-        // if(Player.boots != null){
-        //     foreach(Transform child in BootsPanel){
-        //         if(child.gameObject.name == "image"){
-        //             child.sprite = Player.boots.GetSprite();
-        //         }
-        //     }
-        // }
-
-        // WeaponPanel = GameObject.Find("WeaponSlot");
     }
 
     void Update(){
@@ -230,6 +184,41 @@ public class InventoryUI : MonoBehaviour
                                 break;
                     }
                 }
+                foreach(Transform child3 in child2){
+                    if(child3.gameObject.name == "level"){
+                        switch(k){
+                            default: break;
+                            case 0: if(Player.helmet != null){
+                                        child3.GetComponent<Text>().text = Player.helmet.GetLevel().ToString();
+                                    }
+                                    break;
+                            case 1: if(Player.chestplate != null){
+                                        child3.GetComponent<Text>().text = Player.chestplate.GetLevel().ToString();
+                                    }
+                                    break;
+                            case 2: if(Player.leggings != null){
+                                        child3.GetComponent<Text>().text = Player.leggings.GetLevel().ToString();
+                                    }
+                                    break;
+                            case 3: if(Player.boots != null){
+                                        child3.GetComponent<Text>().text = Player.boots.GetLevel().ToString();
+                                    }
+                                    break;
+                            case 4: if(Player.amulet != null){
+                                        child3.GetComponent<Text>().text = Player.amulet.GetLevel().ToString();
+                                    }
+                                    break;
+                            case 5: if(Player.ring != null){
+                                        child3.GetComponent<Text>().text = Player.ring.GetLevel().ToString();
+                                    }
+                                    break;
+                            case 6: if(Player.weapon != null){
+                                        child3.GetComponent<Text>().text = Player.weapon.GetLevel().ToString();
+                                    }
+                                    break;
+                        }
+                    }
+                }
             }
             k++;
             }
@@ -247,6 +236,11 @@ public class InventoryUI : MonoBehaviour
                         if(child.gameObject.name == "image"){
                             child.GetComponent<Image>().sprite = null;
                             child.GetComponent<Image>().color = new Color32(91,91,91,91);
+                            foreach(Transform child2 in child){
+                                if(child2.gameObject.name == "level"){
+                                    child2.GetComponent<Text>().text = "";
+                                }
+                            }
                         }
                     }
                     else{
@@ -256,6 +250,11 @@ public class InventoryUI : MonoBehaviour
                         if(child.gameObject.name == "image"){
                             child.GetComponent<Image>().sprite = Player.inventory[i].GetSprite();
                             child.GetComponent<Image>().color = new Color32(255,255,255,255);
+                            foreach(Transform child2 in child){
+                                if(child2.gameObject.name == "level"){
+                                    child2.GetComponent<Text>().text = Player.inventory[i].GetLevel().ToString();
+                                }
+                            }
                         }
                     }
                 }
@@ -270,6 +269,11 @@ public class InventoryUI : MonoBehaviour
                             if(child.gameObject.name == "image"){
                                 child.GetComponent<Image>().sprite = null;
                                 child.GetComponent<Image>().color = new Color32(91,91,91,91);
+                                foreach(Transform child2 in child){
+                                    if(child2.gameObject.name == "level"){
+                                        child2.GetComponent<Text>().text = null;
+                                    }
+                                }
                             }
                         }
                         else{
@@ -279,6 +283,11 @@ public class InventoryUI : MonoBehaviour
                             if(child.gameObject.name == "image"){
                                 child.GetComponent<Image>().sprite = Player.helmet.GetSprite();
                                 child.GetComponent<Image>().color = new Color32(255,255,255,255);
+                                foreach(Transform child2 in child){
+                                    if(child2.gameObject.name == "level"){
+                                        child2.GetComponent<Text>().text = Player.helmet.GetLevel().ToString();
+                                    }
+                                }
                             }
                         }
                     }
@@ -290,6 +299,11 @@ public class InventoryUI : MonoBehaviour
                             if(child.gameObject.name == "image"){
                                 child.GetComponent<Image>().sprite = null;
                                 child.GetComponent<Image>().color = new Color32(91,91,91,91);
+                                foreach(Transform child2 in child){
+                                    if(child2.gameObject.name == "level"){
+                                        child2.GetComponent<Text>().text = "11";
+                                    }
+                                }
                             }
                         }
                         else{
@@ -299,6 +313,11 @@ public class InventoryUI : MonoBehaviour
                             if(child.gameObject.name == "image"){
                                 child.GetComponent<Image>().sprite = Player.chestplate.GetSprite();
                                 child.GetComponent<Image>().color = new Color32(255,255,255,255);
+                                foreach(Transform child2 in child){
+                                    if(child2.gameObject.name == "level"){
+                                        child2.GetComponent<Text>().text = Player.chestplate.GetLevel().ToString();
+                                    }
+                                }
                             }
                         }
                     }
@@ -310,6 +329,11 @@ public class InventoryUI : MonoBehaviour
                             if(child.gameObject.name == "image"){
                                 child.GetComponent<Image>().sprite = null;
                                 child.GetComponent<Image>().color = new Color32(91,91,91,91);
+                                foreach(Transform child2 in child){
+                                    if(child2.gameObject.name == "level"){
+                                        child2.GetComponent<Text>().text = "11";
+                                    }
+                                }
                             }
                         }
                         else{
@@ -319,6 +343,11 @@ public class InventoryUI : MonoBehaviour
                             if(child.gameObject.name == "image"){
                                 child.GetComponent<Image>().sprite = Player.leggings.GetSprite();
                                 child.GetComponent<Image>().color = new Color32(255,255,255,255);
+                                foreach(Transform child2 in child){
+                                    if(child2.gameObject.name == "level"){
+                                        child2.GetComponent<Text>().text = Player.leggings.GetLevel().ToString();
+                                    }
+                                }
                             }
                         }
                     }
@@ -330,6 +359,11 @@ public class InventoryUI : MonoBehaviour
                             if(child.gameObject.name == "image"){
                                 child.GetComponent<Image>().sprite = null;
                                 child.GetComponent<Image>().color = new Color32(91,91,91,91);
+                                foreach(Transform child2 in child){
+                                    if(child2.gameObject.name == "level"){
+                                        child2.GetComponent<Text>().text = "11";
+                                    }
+                                }
                             }
                         }
                         else{
@@ -339,6 +373,11 @@ public class InventoryUI : MonoBehaviour
                             if(child.gameObject.name == "image"){
                                 child.GetComponent<Image>().sprite = Player.boots.GetSprite();
                                 child.GetComponent<Image>().color = new Color32(255,255,255,255);
+                                foreach(Transform child2 in child){
+                                    if(child2.gameObject.name == "level"){
+                                        child2.GetComponent<Text>().text = Player.boots.GetLevel().ToString();
+                                    }
+                                }
                             }
                         }
                     }
@@ -350,6 +389,11 @@ public class InventoryUI : MonoBehaviour
                             if(child.gameObject.name == "image"){
                                 child.GetComponent<Image>().sprite = null;
                                 child.GetComponent<Image>().color = new Color32(91,91,91,91);
+                                foreach(Transform child2 in child){
+                                    if(child2.gameObject.name == "level"){
+                                        child2.GetComponent<Text>().text = "11";
+                                    }
+                                }
                             }
                         }
                         else{
@@ -359,6 +403,11 @@ public class InventoryUI : MonoBehaviour
                             if(child.gameObject.name == "image"){
                                 child.GetComponent<Image>().sprite = Player.amulet.GetSprite();
                                 child.GetComponent<Image>().color = new Color32(255,255,255,255);
+                                foreach(Transform child2 in child){
+                                    if(child2.gameObject.name == "level"){
+                                        child2.GetComponent<Text>().text = Player.amulet.GetLevel().ToString();
+                                    }
+                                }
                             }
                         }
                     }
@@ -370,6 +419,11 @@ public class InventoryUI : MonoBehaviour
                             if(child.gameObject.name == "image"){
                                 child.GetComponent<Image>().sprite = null;
                                 child.GetComponent<Image>().color = new Color32(91,91,91,91);
+                                foreach(Transform child2 in child){
+                                    if(child2.gameObject.name == "level"){
+                                        child2.GetComponent<Text>().text = "11";
+                                    }
+                                }
                             }
                         }
                         else{
@@ -379,6 +433,11 @@ public class InventoryUI : MonoBehaviour
                             if(child.gameObject.name == "image"){
                                 child.GetComponent<Image>().sprite = Player.ring.GetSprite();
                                 child.GetComponent<Image>().color = new Color32(255,255,255,255);
+                                foreach(Transform child2 in child){
+                                    if(child2.gameObject.name == "level"){
+                                        child2.GetComponent<Text>().text = Player.ring.GetLevel().ToString();
+                                    }
+                                }
                             }
                         }
                     }
@@ -390,6 +449,11 @@ public class InventoryUI : MonoBehaviour
                             if(child.gameObject.name == "image"){
                                 child.GetComponent<Image>().sprite = null;
                                 child.GetComponent<Image>().color = new Color32(91,91,91,91);
+                                foreach(Transform child2 in child){
+                                    if(child2.gameObject.name == "level"){
+                                        child2.GetComponent<Text>().text = Player.weapon.GetLevel().ToString();
+                                    }
+                                }
                             }
                         }
                         else{
@@ -399,6 +463,11 @@ public class InventoryUI : MonoBehaviour
                             if(child.gameObject.name == "image"){
                                 child.GetComponent<Image>().sprite = Player.weapon.GetSprite();
                                 child.GetComponent<Image>().color = new Color32(255,255,255,255);
+                                foreach(Transform child2 in child){
+                                    if(child2.gameObject.name == "level"){
+                                        child2.GetComponent<Text>().text = Player.weapon.GetLevel().ToString();
+                                    }
+                                }
                             }
                         }
                     }

@@ -13,14 +13,15 @@ public class RoomManager : MonoBehaviour
     public Text locationText;
     public Text healthText;
 
+    public GameObject chestPrefab;
+    public Transform chestContainer;
+
     // Update is called once per frame
     void Update()
     {
         healthText.text = Player.health.ToString();
-        int rooms = 0;
         foreach(Room CurrentRoom in DungeonGenerator.RoomsSorted){
             if(CurrentRoom.isInRoom){
-                rooms++;
                 if(CurrentRoom.isTowerRoom && CurrentRoom.timer > 0.0f){
                     CurrentRoom.timer -= 1 * Time.deltaTime;
                     timerText.text = CurrentRoom.timer.ToString();
@@ -28,6 +29,12 @@ public class RoomManager : MonoBehaviour
                 else timerText.text = "";
                 if(CurrentRoom.isTowerRoom && CurrentRoom.timer < 0.0f && !CurrentRoom.isCleared){
                     OpenDoors(CurrentRoom);
+                    SpawnChest(CurrentRoom);
+                }
+                if(CurrentRoom.enemyCount == 0 && !CurrentRoom.isCleared && !CurrentRoom.isTowerRoom){
+                    Debug.Log("asd");
+                    OpenDoors(CurrentRoom);
+                    SpawnChest(CurrentRoom);
                 }
             }
         }
@@ -36,12 +43,13 @@ public class RoomManager : MonoBehaviour
             foreach(Room CurrentRoom in DungeonGenerator.RoomsSorted){
                 if(CurrentRoom.isInRoom){
                     OpenDoors(CurrentRoom);
+                    SpawnChest(CurrentRoom);
                 }
             }
         }
     }
 
-    public static void OpenDoors(Room CurrentRoom){
+    public void OpenDoors(Room CurrentRoom){
         // foreach(Room CurrentRoom in DungeonGenerator.RoomsSorted){
                 foreach(Room ChildRoom in DungeonGenerator.RoomsSorted){
                     if(ChildRoom.parentRoom == CurrentRoom){
@@ -78,9 +86,16 @@ public class RoomManager : MonoBehaviour
                                 break;
                             }
                         }
+                        //SpawnChest(CurrentRoom);
                     }
                 }
                 CurrentRoom.isCleared = true;
         // }
+    }
+
+    public void SpawnChest(Room currentRoom){
+        Debug.Log(currentRoom.roomIndex);
+        Instantiate(chestPrefab, chestContainer);
+        chestPrefab.transform.position = new Vector3(currentRoom.location.x, currentRoom.location.y, 10);
     }
 }

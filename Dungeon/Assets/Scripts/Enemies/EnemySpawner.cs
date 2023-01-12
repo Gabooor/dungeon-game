@@ -106,7 +106,7 @@ public class EnemySpawner : MonoBehaviour
                 if(quadrons.Count == 4){
                     quadrons.Clear();
                 }
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(0.5f);
         }
     }
 
