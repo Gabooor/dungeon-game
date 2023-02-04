@@ -31,12 +31,12 @@ public class EnemySpawner : MonoBehaviour
     public void Update(){
         foreach(Room room in DungeonGenerator.Rooms){
             Vector2 pos = new Vector2(player.transform.position.x, player.transform.position.y);
-            if((pos.x >= room.location.x) && (pos.x <= room.location.x + room.width) && (pos.y >= room.location.y) && (pos.y <= room.location.y + room.height)){
-                room.isInRoom = true;
-            }
-            else{
-                room.isInRoom = false;
-            }
+            // if((pos.x >= room.location.x) && (pos.x <= room.location.x + room.width) && (pos.y >= room.location.y) && (pos.y <= room.location.y + room.height)){
+            //     room.isInRoom = true;
+            // }
+            // else{
+            //     room.isInRoom = false;
+            // }
             if(room.isInRoom){
                 currentRoom = room;
                 if(room.firstEnter){
@@ -46,7 +46,7 @@ public class EnemySpawner : MonoBehaviour
                             StartCoroutine(SpawnTowers(room));
                         }
                         else{
-                            room.enemyCount = enemySpawnAmount;
+                            //room.enemyCount = enemySpawnAmount;
                             StartCoroutine(SpawnWaves(room));
                         }
                     }
@@ -71,7 +71,8 @@ public class EnemySpawner : MonoBehaviour
                 }
                 //GameObject obj = Instantiate(skeletonArcherPrefab, enemyList.transform);
                 Enemy enemy = obj.transform.GetComponent<Enemy>();
-                enemy.index = enemyCount;
+                //enemy.index = enemyCount;
+                //enemyCount++;
                 enemy.setRoomBoundaries(room.location.x,room.location.y, (room.location.x + room.width), (room.location.y + room.height));
                 enemy.adherentRoom = room;
                 //room.enemyCount++;

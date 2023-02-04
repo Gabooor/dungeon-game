@@ -55,7 +55,7 @@ public class Room{
     public int roomIndex;
 
     public Enemy[] enemies;
-    public int enemyCount;
+    public int enemyCount = 16;
     
     public float timer = 12.0f;
 }

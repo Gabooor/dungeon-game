@@ -15,7 +15,7 @@ public class Enemy : MonoBehaviour
     protected float minX, minY, maxX, maxY;
 
     // Indexelés
-    public int index;
+    //public int index;
     public int enemyRoomIndex;
     public Room adherentRoom;
 

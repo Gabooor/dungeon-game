@@ -7,6 +7,10 @@ public class TreasureChest : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("Szint befejezve");
+        Debug.Log(transform.position);
+    }
+
+    void Update(){
+        Debug.Log(transform.position);
     }
 }

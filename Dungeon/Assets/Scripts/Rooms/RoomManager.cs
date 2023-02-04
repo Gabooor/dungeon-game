@@ -19,6 +19,21 @@ public class RoomManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        foreach(Room room in DungeonGenerator.Rooms){
+            Vector2 pos = new Vector2(player.transform.position.x, player.transform.position.y);
+            if((pos.x >= room.location.x) && (pos.x <= room.location.x + room.width) && (pos.y >= room.location.y) && (pos.y <= room.location.y + room.height)){
+                room.isInRoom = true;
+            }
+            else{
+                room.isInRoom = false;
+            }
+        }
+        foreach(Room CurrentRoom in DungeonGenerator.RoomsSorted){
+            if(CurrentRoom.isInRoom){
+                Debug.Log(CurrentRoom.roomIndex + ": " + CurrentRoom.location);
+            }
+        }
+
         healthText.text = Player.health.ToString();
         foreach(Room CurrentRoom in DungeonGenerator.RoomsSorted){
             if(CurrentRoom.isInRoom){
@@ -94,8 +109,8 @@ public class RoomManager : MonoBehaviour
     }
 
     public void SpawnChest(Room currentRoom){
-        Debug.Log(currentRoom.roomIndex);
-        Instantiate(chestPrefab, chestContainer);
-        chestPrefab.transform.position = new Vector3(currentRoom.location.x, currentRoom.location.y, 10);
+        Debug.Log("Finished Room #" + currentRoom.roomIndex + ", location is" + currentRoom.location);
+        GameObject chest = Instantiate(chestPrefab, chestContainer);
+        chest.transform.position = new Vector3(currentRoom.location.x + (currentRoom.width/2), currentRoom.location.y + (currentRoom.height/2), 10);
     }
 }
